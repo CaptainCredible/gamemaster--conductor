@@ -1,0 +1,30 @@
+{
+    "name": "GAMEMASTER + CONDUCTOR",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "pxt-microbitorchestra": "github:captaincredible/pxt-microbitorchestra#v0.3.28",
+        "microphone": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v1.2.12",
+        "tag": "v1.2.12",
+        "commits": "https://github.com/Microsoft/pxt-microbit/commits/7c2d7ba7c481ff8da7ea3f8a1ba37f5bae099be9",
+        "target": "7.0.61",
+        "pxt": "4.4.7",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
+}
