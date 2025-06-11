@@ -51,9 +51,10 @@ function handleMessages() {
         clearTimer = input.runningTime()
         hasCleared = false
     } else if (inData[0] == "A") {
-        let ASound = 0
-        OrchestraMusician.send(ASound, "Mum")
         OrchestraMusician.gameMaster("A")
+        radio.setGroup(83);
+        radio.sendValue("MumP", 0b00000001)
+        radio.setGroup(84);
         music.ringTone(249)
         led.plot(0, 1)
         led.plot(0, 2)
@@ -62,9 +63,10 @@ function handleMessages() {
         clearTimer = input.runningTime()
         hasCleared = false
     } else if (inData[0] == "B") {
-        let BSound = 0
-        OrchestraMusician.send(BSound, "Mum")
         OrchestraMusician.gameMaster("B")
+        radio.setGroup(83);
+        radio.sendValue("MumP", 0b00000100)
+        radio.setGroup(84);
         music.ringTone(649)
         led.plot(4, 1)
         led.plot(4, 2)
