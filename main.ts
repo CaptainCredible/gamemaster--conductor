@@ -1,7 +1,8 @@
+//added radiosend for mum (d) and cat (c)
+let playTones = false
 let displayNoteNumber = 0
 let thisData = ""
 let stringyArray: string[] = []
-
 let solo = false
 let mute = false
 let clearTimer = 0
@@ -39,7 +40,9 @@ function handleMessages() {
     if (inData[0] == "X") {
         OrchestraMusician.gameMaster("A")
         OrchestraMusician.gameMaster("B")
-        music.ringTone(349)
+        if(playTones){
+            music.ringTone(349)
+        }
         led.plot(0, 1)
         led.plot(0, 2)
         led.plot(0, 3)
@@ -55,7 +58,10 @@ function handleMessages() {
         radio.setGroup(83);
         radio.sendValue("MumP", 0b00000001)
         radio.setGroup(84);
-        music.ringTone(249)
+        if(playTones){
+            music.ringTone(249)
+        }
+        
         led.plot(0, 1)
         led.plot(0, 2)
         led.plot(0, 3)
@@ -67,7 +73,10 @@ function handleMessages() {
         radio.setGroup(83);
         radio.sendValue("MumP", 0b00000100)
         radio.setGroup(84);
-        music.ringTone(649)
+        if(playTones){
+            music.ringTone(649)
+        }
+        
         led.plot(4, 1)
         led.plot(4, 2)
         led.plot(4, 3)
@@ -114,6 +123,28 @@ function handleConductorMessages(stringy: string) {
                 }
                 radio.setGroup(83)
                 radio.sendValue("RabP", noteBits)
+                break
+            case "d":
+                let mumNoteBits = 0b0000000000000000
+                for (let j = 1; j < thisData.length; j++) {
+                    let thisNote = parseInt(thisData[j])
+                    let thisBit = 0b0000000000000001 << thisNote
+                    noteBits = thisBit | noteBits // add bit to noteBits
+                    triggerDisplayNote(thisNote)
+                }
+                radio.setGroup(83)
+                radio.sendValue("MumP", noteBits)
+                break
+            case "c":
+                let catNoteBits = 0b0000000000000000
+                for (let j = 1; j < thisData.length; j++) {
+                    let thisNote = parseInt(thisData[j])
+                    let thisBit = 0b0000000000000001 << thisNote
+                    noteBits = thisBit | noteBits // add bit to noteBits
+                    triggerDisplayNote(thisNote)
+                }
+                radio.setGroup(83)
+                radio.sendValue("CatP", noteBits)
                 break
             case "M":
                 //MUTE ON
@@ -169,7 +200,10 @@ function triggerDisplayNote(thisNote: number) {
     displayNoteNumber = thisNote % 4
     clearTimer = input.runningTime()
     hasCleared = false;
-    music.ringTone(440 + (displayNoteNumber * 100))
+    if (playTones) {
+        music.ringTone(440 + (displayNoteNumber * 100))
+    }
+    
     if (displayNoteNumber < 2) {
         led.plot(displayNoteNumber, 4)
     } else {
